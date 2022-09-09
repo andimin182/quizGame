@@ -1,0 +1,15 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "category": "Entertainment: Books",
+            "type": "boolean",
+            "difficulty": "easy",
+            "question": "&quot;Green Eggs and Ham&quot; consists of only 50 different words.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        }
+    ]
+}
