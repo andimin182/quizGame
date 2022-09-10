@@ -1,17 +1,13 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:quiz/core/util/input_converter.dart';
 import 'package:quiz/data/models/request/quiz_request.dart';
 import 'package:quiz/domain/entities/quiz_entity.dart';
 import 'package:quiz/domain/usecases/quiz_usecase.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'quiz_event.dart';
 part 'quiz_state.dart';
-
-// ignore: constant_identifier_names
-const String INVALID_INPUT_MESSAGE_FAILURE = 'Input is not valid';
-// ignore: constant_identifier_names
-const String SERVER_MESSAGE_FAILURE = 'Server error: something went wrong';
+part 'quiz_bloc.freezed.dart';
 
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final GetQuestions getQuestions;
@@ -23,58 +19,95 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   QuizBloc({
     required this.getQuestions,
     required this.inputConverter,
-  }) : super(QuizEmptyState()) {
-    on<GetQuizEvent>(
-      (event, emit) async {
-        final categoryParsed =
-            inputConverter.stringToUnsignedInteger(event.category);
-        emit(
-          categoryParsed.fold(
-            (_) {
-              category = 0;
-              return const QuizErrorState(INVALID_INPUT_MESSAGE_FAILURE);
-            },
-            (catInt) {
-              category = catInt;
-              final amountParsed =
-                  inputConverter.stringToUnsignedInteger(event.amount);
-              return amountParsed.fold(
-                (failure) {
-                  amount = 0;
-                  return const QuizErrorState(INVALID_INPUT_MESSAGE_FAILURE);
-                },
-                (amountInt) {
-                  amount = amountInt;
-                  final typeCheck = inputConverter.checkString(event.type);
-                  return typeCheck.fold((failure) {
-                    type = '';
-                    return const QuizErrorState(INVALID_INPUT_MESSAGE_FAILURE);
-                  }, (typeStr) {
-                    type = typeStr;
-                    return QuizLoadingState();
-                  });
-                },
-              );
-            },
-          ),
-        );
-        if (category != 0 && amount != 0 && type != '') {
-          final request = QuestionRequest(
-            amount: amount,
-            category: category,
-            type: type,
-          );
-
-          final failureOrQuestions =
-              await getQuestions.execute(request: request);
-          emit(failureOrQuestions.fold(
-            (failure) => const QuizErrorState(SERVER_MESSAGE_FAILURE),
-            (result) => QuizLoadedState(questions: result),
+  }) : super(QuizState.initial()) {
+    on<QuizEvent>((event, emit) async {
+      await event.map(
+        categoryChanged: (e) {
+          emit(state.copyWith(
+            category: e.categoryStr,
           ));
-        } else {
-          emit(const QuizErrorState(INVALID_INPUT_MESSAGE_FAILURE));
-        }
-      },
-    );
+        },
+        amountChanged: (e) {
+          emit(state.copyWith(
+            amount: e.amountStr,
+          ));
+        },
+        typeChanged: (e) {
+          emit(state.copyWith(
+            type: e.typeStr,
+          ));
+        },
+        getQuizPressed: (e) async {
+          final categoryParsed =
+              inputConverter.stringToUnsignedInteger(state.category);
+          emit(
+            categoryParsed.fold(
+              (_) {
+                category = 0;
+                return state.copyWith(
+                  isError: true,
+                );
+              },
+              (catInt) {
+                category = catInt;
+                final amountParsed =
+                    inputConverter.stringToUnsignedInteger(state.amount);
+                return amountParsed.fold(
+                  (failure) {
+                    amount = 0;
+                    return state.copyWith(
+                      isError: true,
+                    );
+                  },
+                  (amountInt) {
+                    amount = amountInt;
+                    final typeCheck = inputConverter.checkString(state.type);
+                    return typeCheck.fold((failure) {
+                      type = '';
+                      return state.copyWith(
+                        isError: true,
+                      );
+                    }, (typeStr) {
+                      type = typeStr;
+                      return state.copyWith(
+                        isLoading: true,
+                        isError: false,
+                      );
+                    });
+                  },
+                );
+              },
+            ),
+          );
+          if (category != 0 && amount != 0 && type != '') {
+            final request = QuestionRequest(
+              amount: amount,
+              category: category,
+              type: type,
+            );
+
+            final failureOrQuestions =
+                await getQuestions.execute(request: request);
+            emit(failureOrQuestions.fold(
+              (failure) => state.copyWith(
+                isError: true,
+                isLoading: false,
+              ),
+              (result) => state.copyWith(
+                results: result,
+                isLoading: false,
+                isLoaded: true,
+                isError: false,
+              ),
+            ));
+          } else {
+            emit(state.copyWith(
+              isError: true,
+              isLoading: false,
+            ));
+          }
+        },
+      );
+    });
   }
 }

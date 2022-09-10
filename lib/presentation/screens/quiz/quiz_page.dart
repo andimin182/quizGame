@@ -11,30 +11,30 @@ class QuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<QuizBloc, QuizState>(
       builder: (context, state) {
-        if (state is QuizLoadingState) {
+        if (state.isLoading) {
           return const InProgress();
-        } else if (state is QuizErrorState) {
+        } else if (state.isError) {
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 26, 4, 30),
             appBar: AppBar(
               title: const Text('Category'),
             ),
-            body: Center(
+            body: const Center(
               child: Text(
-                state.message,
-                style: const TextStyle(
+                'Input not valid',
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                 ),
               ),
             ),
           );
-        } else if (state is QuizLoadedState) {
+        } else if (state.isLoaded) {
           return QuizPageWidget(
-            questions: state.questions,
+            questions: state.results,
           );
         }
-        return const Text('unexpected');
+        return const Text('Unexpected error...');
       },
     );
   }

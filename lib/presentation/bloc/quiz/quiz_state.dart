@@ -1,29 +1,26 @@
 part of 'quiz_bloc.dart';
 
-abstract class QuizState extends Equatable {
-  const QuizState();
+@freezed
+class QuizState with _$QuizState {
+  const factory QuizState({
+    required bool isLoading,
+    required bool isLoaded,
+    required bool isError,
+    required String category,
+    required String type,
+    required String amount,
+    required List<Question> results,
+  }) = _QuizState;
 
-  @override
-  List<Object> get props => [];
-}
-
-class QuizEmptyState extends QuizState {}
-
-class QuizLoadingState extends QuizState {}
-
-class QuizLoadedState extends QuizState {
-  final List<Question> questions;
-
-  const QuizLoadedState({required this.questions});
-  @override
-  List<Object> get props => [questions];
-}
-
-class QuizErrorState extends QuizState {
-  final String message;
-
-  const QuizErrorState(this.message);
-
-  @override
-  List<Object> get props => [message];
+  factory QuizState.initial() {
+    return const QuizState(
+      isLoading: false,
+      isLoaded: false,
+      isError: false,
+      category: '',
+      type: '',
+      amount: '',
+      results: [],
+    );
+  }
 }

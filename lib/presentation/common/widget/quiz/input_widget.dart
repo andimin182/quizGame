@@ -46,6 +46,9 @@ class _InputWidgetState extends State<InputWidget> {
             isExpanded: true,
             value: typeValue,
             onChanged: (String? newValue) {
+              BlocProvider.of<QuizBloc>(context).add(
+                QuizEvent.typeChanged(Type.getMap()[newValue] ?? ''),
+              );
               setState(() {
                 typeValue = newValue ?? defaultType;
               });
@@ -72,6 +75,9 @@ class _InputWidgetState extends State<InputWidget> {
             isExpanded: true,
             value: categoryValue,
             onChanged: (String? newValue) {
+              BlocProvider.of<QuizBloc>(context).add(
+                QuizEvent.categoryChanged(Category.categories[newValue] ?? ''),
+              );
               setState(() {
                 categoryValue = newValue!;
               });
@@ -96,6 +102,11 @@ class _InputWidgetState extends State<InputWidget> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
           child: TextField(
+            onChanged: (value) {
+              BlocProvider.of<QuizBloc>(context).add(
+                QuizEvent.amountChanged(value),
+              );
+            },
             controller: amountController,
             decoration: const InputDecoration(
               hintText: 'Scegli il numero',
@@ -106,11 +117,7 @@ class _InputWidgetState extends State<InputWidget> {
         ElevatedButton(
           onPressed: () {
             BlocProvider.of<QuizBloc>(context).add(
-              GetQuizEvent(
-                category: Category.categories[categoryValue] ?? '',
-                amount: amountController.text,
-                type: Type.getMap()[typeValue] ?? '',
-              ),
+              const QuizEvent.getQuizPressed(),
             );
             context.router.replace(const QuizRoute());
           },
@@ -127,18 +134,3 @@ class _InputWidgetState extends State<InputWidget> {
     );
   }
 }
-
-
-/* TextField(
-            controller: categoryController,
-            decoration: const InputDecoration(
-              hintText: 'Scegli la categoria',
-            ),
-          ), */
-
-/* TextField(
-            controller: typeController,
-            decoration: const InputDecoration(
-              hintText: 'Scegli il tipo',
-            ),
-          ), */
