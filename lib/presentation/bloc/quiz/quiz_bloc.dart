@@ -30,7 +30,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             inputConverter.stringToUnsignedInteger(event.category);
         emit(
           categoryParsed.fold(
-            (failure) {
+            (_) {
               category = 0;
               return const QuizErrorState(INVALID_INPUT_MESSAGE_FAILURE);
             },

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:quiz/core/error.dart';
 import 'package:quiz/core/util/input_converter.dart';
 
 void main() {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/presentation/bloc/quiz/quiz_bloc.dart';
+import 'package:quiz/presentation/common/input_type_category.dart';
 import 'package:quiz/presentation/common/widget/vertical_space.dart';
-import 'package:quiz/presentation/screens/quiz/quiz_page.dart';
+import 'package:quiz/presentation/router/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
 class InputWidget extends StatefulWidget {
   const InputWidget({Key? key}) : super(key: key);
@@ -13,22 +15,19 @@ class InputWidget extends StatefulWidget {
 
 class _InputWidgetState extends State<InputWidget> {
   late TextEditingController amountController;
-  late TextEditingController categoryController;
-  late TextEditingController typeController;
+  String categoryValue = Category.categories.keys.toList()[0];
+  String typeValue = Type.type[0];
+  String defaultType = Type.type[0];
 
   @override
   void initState() {
     super.initState();
     amountController = TextEditingController();
-    categoryController = TextEditingController();
-    typeController = TextEditingController();
   }
 
   @override
   void dispose() {
     amountController.dispose();
-    typeController.dispose();
-    categoryController.dispose();
     super.dispose();
   }
 
@@ -43,11 +42,22 @@ class _InputWidgetState extends State<InputWidget> {
           ),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: TextField(
-            controller: categoryController,
-            decoration: const InputDecoration(
-              hintText: 'Scegli la categoria',
-            ),
+          child: DropdownButton<String>(
+            isExpanded: true,
+            value: typeValue,
+            onChanged: (String? newValue) {
+              setState(() {
+                typeValue = newValue ?? defaultType;
+              });
+            },
+            items: Type.type
+                .map<DropdownMenuItem<String>>(
+                  (category) => DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(category),
+                  ),
+                )
+                .toList(),
           ),
         ),
         const VerticalSpace(size: 20),
@@ -58,11 +68,23 @@ class _InputWidgetState extends State<InputWidget> {
           ),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: TextField(
-            controller: typeController,
-            decoration: const InputDecoration(
-              hintText: 'Scegli il tipo',
-            ),
+          child: DropdownButton<String>(
+            isExpanded: true,
+            value: categoryValue,
+            onChanged: (String? newValue) {
+              setState(() {
+                categoryValue = newValue!;
+              });
+            },
+            items: Category.categories.keys
+                .toList()
+                .map<DropdownMenuItem<String>>(
+                  (category) => DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(category),
+                  ),
+                )
+                .toList(),
           ),
         ),
         const VerticalSpace(size: 20),
@@ -85,17 +107,12 @@ class _InputWidgetState extends State<InputWidget> {
           onPressed: () {
             BlocProvider.of<QuizBloc>(context).add(
               GetQuizEvent(
-                category: categoryController.text,
+                category: Category.categories[categoryValue] ?? '',
                 amount: amountController.text,
-                type: typeController.text,
+                type: Type.getMap()[typeValue] ?? '',
               ),
             );
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const QuizPage(),
-              ),
-            );
+            context.router.replace(const QuizRoute());
           },
           child: const Text(
             'Comincia il quiz',
@@ -110,3 +127,18 @@ class _InputWidgetState extends State<InputWidget> {
     );
   }
 }
+
+
+/* TextField(
+            controller: categoryController,
+            decoration: const InputDecoration(
+              hintText: 'Scegli la categoria',
+            ),
+          ), */
+
+/* TextField(
+            controller: typeController,
+            decoration: const InputDecoration(
+              hintText: 'Scegli il tipo',
+            ),
+          ), */

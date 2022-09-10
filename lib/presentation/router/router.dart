@@ -8,12 +8,12 @@ import 'package:quiz/presentation/screens/quiz/results_page.dart';
   routes: [
     MaterialRoute(
       page: AuthPage,
-      initial: true,
+      initial: false,
       path: '/auth',
     ),
     MaterialRoute(
       page: HomePage,
-      initial: false,
+      initial: true,
       path: '/home',
     ),
     MaterialRoute(

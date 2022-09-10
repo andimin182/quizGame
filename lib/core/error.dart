@@ -24,3 +24,8 @@ class ConnectionFailure implements Failure {
   @override
   bool? get stringify => true;
 }
+
+class InvalidInputFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}

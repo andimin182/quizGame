@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:quiz/core/util/input_converter.dart';
+import 'package:quiz/core/error.dart';
 import 'package:quiz/data/models/request/quiz_request.dart';
 import 'package:quiz/domain/entities/quiz_entity.dart';
 import 'package:quiz/domain/usecases/quiz_usecase.dart' as question;

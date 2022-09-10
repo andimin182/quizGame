@@ -49,7 +49,7 @@ class AppRouter extends _i5.RootStackRouter {
   @override
   List<_i5.RouteConfig> get routes => [
         _i5.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/auth', fullMatch: true),
+            path: '/', redirectTo: '/home', fullMatch: true),
         _i5.RouteConfig(AuthRoute.name, path: '/auth'),
         _i5.RouteConfig(HomeRoute.name, path: '/home'),
         _i5.RouteConfig(QuizRoute.name, path: '/quiz'),
