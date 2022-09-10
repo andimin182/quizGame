@@ -10,6 +10,10 @@ class Category {
     'Geography': '22',
     'History': '23',
   };
+
+  static String initStateKey() => categories.keys.toList()[0];
+
+  static String initStateValue() => categories[0] ?? '9';
 }
 
 class Type {
@@ -17,6 +21,13 @@ class Type {
     'Multiple Choice',
     'True/False',
   ];
+
+  static String initStateKey() => type[0];
+
+  static String initStateValue() {
+    final map = getMap();
+    return map[0] ?? 'multiple';
+  }
 
   static Map<String, String> getMap() {
     final map = <String, String>{

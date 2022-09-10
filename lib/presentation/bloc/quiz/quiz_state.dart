@@ -13,12 +13,12 @@ class QuizState with _$QuizState {
   }) = _QuizState;
 
   factory QuizState.initial() {
-    return const QuizState(
+    return QuizState(
       isLoading: false,
       isLoaded: false,
       isError: false,
-      category: '',
-      type: '',
+      category: Category.initStateValue(),
+      type: Type.initStateValue(),
       amount: '',
       results: [],
     );

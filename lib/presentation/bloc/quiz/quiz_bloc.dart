@@ -4,6 +4,7 @@ import 'package:quiz/data/models/request/quiz_request.dart';
 import 'package:quiz/domain/entities/quiz_entity.dart';
 import 'package:quiz/domain/usecases/quiz_usecase.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:quiz/presentation/common/input_type_category.dart';
 
 part 'quiz_event.dart';
 part 'quiz_state.dart';
@@ -106,6 +107,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
               isLoading: false,
             ));
           }
+        },
+        newQuizPressed: (_) {
+          emit(QuizState.initial());
         },
       );
     });

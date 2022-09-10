@@ -15,9 +15,10 @@ class InputWidget extends StatefulWidget {
 
 class _InputWidgetState extends State<InputWidget> {
   late TextEditingController amountController;
-  String categoryValue = Category.categories.keys.toList()[0];
-  String typeValue = Type.type[0];
-  String defaultType = Type.type[0];
+  String categoryValue = Category.initStateKey();
+  String defaultCategory = Category.initStateKey();
+  String typeValue = Type.initStateKey();
+  String defaultType = Type.initStateKey();
 
   @override
   void initState() {
@@ -79,7 +80,7 @@ class _InputWidgetState extends State<InputWidget> {
                 QuizEvent.categoryChanged(Category.categories[newValue] ?? ''),
               );
               setState(() {
-                categoryValue = newValue!;
+                categoryValue = newValue ?? defaultCategory;
               });
             },
             items: Category.categories.keys

@@ -22,6 +22,7 @@ mixin _$QuizEvent {
     required TResult Function(String amountStr) amountChanged,
     required TResult Function(String typeStr) typeChanged,
     required TResult Function() getQuizPressed,
+    required TResult Function() newQuizPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$QuizEvent {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$QuizEvent {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$QuizEvent {
     required TResult Function(AmountChanged value) amountChanged,
     required TResult Function(TypeChanged value) typeChanged,
     required TResult Function(GetQuizPressed value) getQuizPressed,
+    required TResult Function(NewQuizPressed value) newQuizPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$QuizEvent {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$QuizEvent {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -153,6 +159,7 @@ class _$CategoryChanged implements CategoryChanged {
     required TResult Function(String amountStr) amountChanged,
     required TResult Function(String typeStr) typeChanged,
     required TResult Function() getQuizPressed,
+    required TResult Function() newQuizPressed,
   }) {
     return categoryChanged(categoryStr);
   }
@@ -164,6 +171,7 @@ class _$CategoryChanged implements CategoryChanged {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
   }) {
     return categoryChanged?.call(categoryStr);
   }
@@ -175,6 +183,7 @@ class _$CategoryChanged implements CategoryChanged {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
     required TResult orElse(),
   }) {
     if (categoryChanged != null) {
@@ -190,6 +199,7 @@ class _$CategoryChanged implements CategoryChanged {
     required TResult Function(AmountChanged value) amountChanged,
     required TResult Function(TypeChanged value) typeChanged,
     required TResult Function(GetQuizPressed value) getQuizPressed,
+    required TResult Function(NewQuizPressed value) newQuizPressed,
   }) {
     return categoryChanged(this);
   }
@@ -201,6 +211,7 @@ class _$CategoryChanged implements CategoryChanged {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
   }) {
     return categoryChanged?.call(this);
   }
@@ -212,6 +223,7 @@ class _$CategoryChanged implements CategoryChanged {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
     required TResult orElse(),
   }) {
     if (categoryChanged != null) {
@@ -298,6 +310,7 @@ class _$AmountChanged implements AmountChanged {
     required TResult Function(String amountStr) amountChanged,
     required TResult Function(String typeStr) typeChanged,
     required TResult Function() getQuizPressed,
+    required TResult Function() newQuizPressed,
   }) {
     return amountChanged(amountStr);
   }
@@ -309,6 +322,7 @@ class _$AmountChanged implements AmountChanged {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
   }) {
     return amountChanged?.call(amountStr);
   }
@@ -320,6 +334,7 @@ class _$AmountChanged implements AmountChanged {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
     required TResult orElse(),
   }) {
     if (amountChanged != null) {
@@ -335,6 +350,7 @@ class _$AmountChanged implements AmountChanged {
     required TResult Function(AmountChanged value) amountChanged,
     required TResult Function(TypeChanged value) typeChanged,
     required TResult Function(GetQuizPressed value) getQuizPressed,
+    required TResult Function(NewQuizPressed value) newQuizPressed,
   }) {
     return amountChanged(this);
   }
@@ -346,6 +362,7 @@ class _$AmountChanged implements AmountChanged {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
   }) {
     return amountChanged?.call(this);
   }
@@ -357,6 +374,7 @@ class _$AmountChanged implements AmountChanged {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
     required TResult orElse(),
   }) {
     if (amountChanged != null) {
@@ -443,6 +461,7 @@ class _$TypeChanged implements TypeChanged {
     required TResult Function(String amountStr) amountChanged,
     required TResult Function(String typeStr) typeChanged,
     required TResult Function() getQuizPressed,
+    required TResult Function() newQuizPressed,
   }) {
     return typeChanged(typeStr);
   }
@@ -454,6 +473,7 @@ class _$TypeChanged implements TypeChanged {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
   }) {
     return typeChanged?.call(typeStr);
   }
@@ -465,6 +485,7 @@ class _$TypeChanged implements TypeChanged {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
     required TResult orElse(),
   }) {
     if (typeChanged != null) {
@@ -480,6 +501,7 @@ class _$TypeChanged implements TypeChanged {
     required TResult Function(AmountChanged value) amountChanged,
     required TResult Function(TypeChanged value) typeChanged,
     required TResult Function(GetQuizPressed value) getQuizPressed,
+    required TResult Function(NewQuizPressed value) newQuizPressed,
   }) {
     return typeChanged(this);
   }
@@ -491,6 +513,7 @@ class _$TypeChanged implements TypeChanged {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
   }) {
     return typeChanged?.call(this);
   }
@@ -502,6 +525,7 @@ class _$TypeChanged implements TypeChanged {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
     required TResult orElse(),
   }) {
     if (typeChanged != null) {
@@ -564,6 +588,7 @@ class _$GetQuizPressed implements GetQuizPressed {
     required TResult Function(String amountStr) amountChanged,
     required TResult Function(String typeStr) typeChanged,
     required TResult Function() getQuizPressed,
+    required TResult Function() newQuizPressed,
   }) {
     return getQuizPressed();
   }
@@ -575,6 +600,7 @@ class _$GetQuizPressed implements GetQuizPressed {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
   }) {
     return getQuizPressed?.call();
   }
@@ -586,6 +612,7 @@ class _$GetQuizPressed implements GetQuizPressed {
     TResult Function(String amountStr)? amountChanged,
     TResult Function(String typeStr)? typeChanged,
     TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
     required TResult orElse(),
   }) {
     if (getQuizPressed != null) {
@@ -601,6 +628,7 @@ class _$GetQuizPressed implements GetQuizPressed {
     required TResult Function(AmountChanged value) amountChanged,
     required TResult Function(TypeChanged value) typeChanged,
     required TResult Function(GetQuizPressed value) getQuizPressed,
+    required TResult Function(NewQuizPressed value) newQuizPressed,
   }) {
     return getQuizPressed(this);
   }
@@ -612,6 +640,7 @@ class _$GetQuizPressed implements GetQuizPressed {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
   }) {
     return getQuizPressed?.call(this);
   }
@@ -623,6 +652,7 @@ class _$GetQuizPressed implements GetQuizPressed {
     TResult Function(AmountChanged value)? amountChanged,
     TResult Function(TypeChanged value)? typeChanged,
     TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
     required TResult orElse(),
   }) {
     if (getQuizPressed != null) {
@@ -634,6 +664,128 @@ class _$GetQuizPressed implements GetQuizPressed {
 
 abstract class GetQuizPressed implements QuizEvent {
   const factory GetQuizPressed() = _$GetQuizPressed;
+}
+
+/// @nodoc
+abstract class _$$NewQuizPressedCopyWith<$Res> {
+  factory _$$NewQuizPressedCopyWith(
+          _$NewQuizPressed value, $Res Function(_$NewQuizPressed) then) =
+      __$$NewQuizPressedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$NewQuizPressedCopyWithImpl<$Res> extends _$QuizEventCopyWithImpl<$Res>
+    implements _$$NewQuizPressedCopyWith<$Res> {
+  __$$NewQuizPressedCopyWithImpl(
+      _$NewQuizPressed _value, $Res Function(_$NewQuizPressed) _then)
+      : super(_value, (v) => _then(v as _$NewQuizPressed));
+
+  @override
+  _$NewQuizPressed get _value => super._value as _$NewQuizPressed;
+}
+
+/// @nodoc
+
+class _$NewQuizPressed implements NewQuizPressed {
+  const _$NewQuizPressed();
+
+  @override
+  String toString() {
+    return 'QuizEvent.newQuizPressed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$NewQuizPressed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String categoryStr) categoryChanged,
+    required TResult Function(String amountStr) amountChanged,
+    required TResult Function(String typeStr) typeChanged,
+    required TResult Function() getQuizPressed,
+    required TResult Function() newQuizPressed,
+  }) {
+    return newQuizPressed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String categoryStr)? categoryChanged,
+    TResult Function(String amountStr)? amountChanged,
+    TResult Function(String typeStr)? typeChanged,
+    TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
+  }) {
+    return newQuizPressed?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String categoryStr)? categoryChanged,
+    TResult Function(String amountStr)? amountChanged,
+    TResult Function(String typeStr)? typeChanged,
+    TResult Function()? getQuizPressed,
+    TResult Function()? newQuizPressed,
+    required TResult orElse(),
+  }) {
+    if (newQuizPressed != null) {
+      return newQuizPressed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CategoryChanged value) categoryChanged,
+    required TResult Function(AmountChanged value) amountChanged,
+    required TResult Function(TypeChanged value) typeChanged,
+    required TResult Function(GetQuizPressed value) getQuizPressed,
+    required TResult Function(NewQuizPressed value) newQuizPressed,
+  }) {
+    return newQuizPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(CategoryChanged value)? categoryChanged,
+    TResult Function(AmountChanged value)? amountChanged,
+    TResult Function(TypeChanged value)? typeChanged,
+    TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
+  }) {
+    return newQuizPressed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CategoryChanged value)? categoryChanged,
+    TResult Function(AmountChanged value)? amountChanged,
+    TResult Function(TypeChanged value)? typeChanged,
+    TResult Function(GetQuizPressed value)? getQuizPressed,
+    TResult Function(NewQuizPressed value)? newQuizPressed,
+    required TResult orElse(),
+  }) {
+    if (newQuizPressed != null) {
+      return newQuizPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NewQuizPressed implements QuizEvent {
+  const factory NewQuizPressed() = _$NewQuizPressed;
 }
 
 /// @nodoc

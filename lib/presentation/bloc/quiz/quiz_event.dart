@@ -6,4 +6,5 @@ class QuizEvent with _$QuizEvent {
   const factory QuizEvent.amountChanged(String amountStr) = AmountChanged;
   const factory QuizEvent.typeChanged(String typeStr) = TypeChanged;
   const factory QuizEvent.getQuizPressed() = GetQuizPressed;
+  const factory QuizEvent.newQuizPressed() = NewQuizPressed;
 }
