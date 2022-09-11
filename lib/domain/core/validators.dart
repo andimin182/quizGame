@@ -18,3 +18,12 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
     return Left(ValueFailure.invalidPassword(failedValue: input));
   }
 }
+
+Either<ValueFailure<String>, String> validateAmount(String input) {
+  final result = int.parse(input);
+  if (result > 0 && result <= 15) {
+    return Right(input);
+  } else {
+    return Left(ValueFailure.invalidAmount(failedValue: input));
+  }
+}

@@ -5,7 +5,8 @@ class QuizState with _$QuizState {
   const factory QuizState({
     required bool isLoading,
     required bool isLoaded,
-    required bool isError,
+    required bool isSubmitting,
+    required bool showError,
     required String category,
     required String type,
     required String amount,
@@ -13,12 +14,13 @@ class QuizState with _$QuizState {
   }) = _QuizState;
 
   factory QuizState.initial() {
-    return QuizState(
+    return const QuizState(
       isLoading: false,
       isLoaded: false,
-      isError: false,
-      category: Category.initStateValue(),
-      type: Type.initStateValue(),
+      isSubmitting: false,
+      showError: false,
+      category: '',
+      type: '',
       amount: '',
       results: [],
     );

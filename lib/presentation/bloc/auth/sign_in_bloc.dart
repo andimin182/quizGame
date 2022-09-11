@@ -64,7 +64,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
     if (state.email.isValid() && state.password.isValid()) {
       emit(
-        state.copyWith(isSubmitting: true, authFailureOrSuccessOption: none()),
+        state.copyWith(
+          isSubmitting: true,
+          authFailureOrSuccessOption: none(),
+        ),
       );
 
       failureOrSuccess = await forwardedCall(

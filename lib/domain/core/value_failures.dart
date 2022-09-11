@@ -7,11 +7,15 @@ part 'value_failures.freezed.dart';
 ///  we use freezed package for union
 @freezed
 abstract class ValueFailure<T> with _$ValueFailure<T> {
-  /// 2 Union case: InvalidEmail, InvalidPassword
+  /// 2 Union case: InvalidEmail, InvalidPassword for Auth feature
+  /// 3: InvalidCategory, InvalidType and InvalidAmount for Quiz feature
   const factory ValueFailure.invalidEmail({
     required String failedValue,
   }) = InvalidEmail<T>;
   const factory ValueFailure.invalidPassword({
     required String failedValue,
   }) = InvalidPassword<T>;
+  const factory ValueFailure.invalidAmount({
+    required String failedValue,
+  }) = InvalidAmount<T>;
 }

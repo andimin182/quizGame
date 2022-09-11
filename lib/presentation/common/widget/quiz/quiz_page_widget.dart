@@ -41,9 +41,10 @@ class _QuizPageWidgetState extends State<QuizPageWidget> {
         return Scaffold(
           backgroundColor: const Color.fromARGB(255, 26, 4, 30),
           appBar: AppBar(
-            title: Text(Category.categories.keys
-                .firstWhere((k) => Category.categories[k] == state.category)),
-          ),
+              title: Text(
+            CategoryData.categories.keys.firstWhere(
+                (k) => CategoryData.categories[k] == state.category),
+          )),
           body: BlocProvider(
             create: (context) => sL<QuestionBloc>(),
             child: PageView.builder(
@@ -127,14 +128,6 @@ class _QuizPageWidgetState extends State<QuizPageWidget> {
                                 length: widget.questions.length,
                                 results: state.cacheCorrectAnswers,
                               ));
-                              /* Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ResultsPage(
-                                          results: state.cacheCorrectAnswers,
-                                          length: widget.questions.length,
-                                        ),
-                                      )); */
                             },
                             child: const Text(
                               'Show Results',

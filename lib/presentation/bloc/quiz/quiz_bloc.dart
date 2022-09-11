@@ -4,7 +4,6 @@ import 'package:quiz/data/models/request/quiz_request.dart';
 import 'package:quiz/domain/entities/quiz_entity.dart';
 import 'package:quiz/domain/usecases/quiz_usecase.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:quiz/presentation/common/input_type_category.dart';
 
 part 'quiz_event.dart';
 part 'quiz_state.dart';
@@ -45,9 +44,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             categoryParsed.fold(
               (_) {
                 category = 0;
-                return state.copyWith(
-                  isError: true,
-                );
+                return state.copyWith();
               },
               (catInt) {
                 category = catInt;
@@ -56,23 +53,18 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
                 return amountParsed.fold(
                   (failure) {
                     amount = 0;
-                    return state.copyWith(
-                      isError: true,
-                    );
+                    return state.copyWith();
                   },
                   (amountInt) {
                     amount = amountInt;
                     final typeCheck = inputConverter.checkString(state.type);
                     return typeCheck.fold((failure) {
                       type = '';
-                      return state.copyWith(
-                        isError: true,
-                      );
+                      return state.copyWith();
                     }, (typeStr) {
                       type = typeStr;
                       return state.copyWith(
                         isLoading: true,
-                        isError: false,
                       );
                     });
                   },
@@ -90,22 +82,14 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             final failureOrQuestions =
                 await getQuestions.execute(request: request);
             emit(failureOrQuestions.fold(
-              (failure) => state.copyWith(
-                isError: true,
-                isLoading: false,
-              ),
-              (result) => state.copyWith(
-                results: result,
-                isLoading: false,
-                isLoaded: true,
-                isError: false,
-              ),
-            ));
-          } else {
-            emit(state.copyWith(
-              isError: true,
-              isLoading: false,
-            ));
+                (failure) => state.copyWith(
+                      isLoading: false,
+                    ),
+                (result) => state.copyWith(
+                      results: result,
+                      isLoading: false,
+                      isLoaded: true,
+                    )));
           }
         },
         newQuizPressed: (_) {

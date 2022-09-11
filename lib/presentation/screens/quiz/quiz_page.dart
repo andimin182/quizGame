@@ -13,7 +13,7 @@ class QuizPage extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoading) {
           return const InProgress();
-        } else if (state.isError) {
+        } else if (state.showError) {
           return Scaffold(
             backgroundColor: const Color.fromARGB(255, 26, 4, 30),
             appBar: AppBar(
@@ -34,7 +34,9 @@ class QuizPage extends StatelessWidget {
             questions: state.results,
           );
         }
-        return const Text('Unexpected error...');
+        return const Center(
+          child: Text('Unexpected error...'),
+        );
       },
     );
   }

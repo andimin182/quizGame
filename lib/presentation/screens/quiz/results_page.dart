@@ -35,7 +35,7 @@ class ResultsPage extends StatelessWidget {
                 ),
               ),
               Text(
-                '$results/',
+                '$results/$length',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 50,

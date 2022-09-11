@@ -22,18 +22,27 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const VerticalSpace(size: 20),
-              inputQuestionCard(
-                height: 140,
-                answer: 'Scegli il tuo quiz',
-                colorString: Colors.white,
-                colorBg: mainColor,
-              ),
-              const InputWidget(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const VerticalSpace(size: 50),
+                const Text(
+                  '❔',
+                  style: TextStyle(
+                    fontSize: 100,
+                  ),
+                ),
+                const VerticalSpace(size: 20),
+                inputQuestionCard(
+                  height: 140,
+                  answer: 'Choose your quiz',
+                  colorString: Colors.white,
+                  colorBg: mainColor,
+                ),
+                const InputWidget(),
+              ],
+            ),
           ),
         ),
       ),

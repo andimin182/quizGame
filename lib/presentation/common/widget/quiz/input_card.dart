@@ -14,12 +14,14 @@ Widget inputQuestionCard({
       color: colorBg,
       borderRadius: BorderRadius.circular(30),
     ),
-    child: Text(
-      answer,
-      style: TextStyle(
-        color: colorString,
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
+    child: Center(
+      child: Text(
+        answer,
+        style: TextStyle(
+          color: colorString,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
       ),
     ),
   );

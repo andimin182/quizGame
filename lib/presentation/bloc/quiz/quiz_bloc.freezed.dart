@@ -792,7 +792,8 @@ abstract class NewQuizPressed implements QuizEvent {
 mixin _$QuizState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isLoaded => throw _privateConstructorUsedError;
-  bool get isError => throw _privateConstructorUsedError;
+  bool get isSubmitting => throw _privateConstructorUsedError;
+  bool get showError => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String get amount => throw _privateConstructorUsedError;
@@ -810,7 +811,8 @@ abstract class $QuizStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool isLoaded,
-      bool isError,
+      bool isSubmitting,
+      bool showError,
       String category,
       String type,
       String amount,
@@ -829,7 +831,8 @@ class _$QuizStateCopyWithImpl<$Res> implements $QuizStateCopyWith<$Res> {
   $Res call({
     Object? isLoading = freezed,
     Object? isLoaded = freezed,
-    Object? isError = freezed,
+    Object? isSubmitting = freezed,
+    Object? showError = freezed,
     Object? category = freezed,
     Object? type = freezed,
     Object? amount = freezed,
@@ -844,9 +847,13 @@ class _$QuizStateCopyWithImpl<$Res> implements $QuizStateCopyWith<$Res> {
           ? _value.isLoaded
           : isLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
-      isError: isError == freezed
-          ? _value.isError
-          : isError // ignore: cast_nullable_to_non_nullable
+      isSubmitting: isSubmitting == freezed
+          ? _value.isSubmitting
+          : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showError: showError == freezed
+          ? _value.showError
+          : showError // ignore: cast_nullable_to_non_nullable
               as bool,
       category: category == freezed
           ? _value.category
@@ -877,7 +884,8 @@ abstract class _$$_QuizStateCopyWith<$Res> implements $QuizStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool isLoaded,
-      bool isError,
+      bool isSubmitting,
+      bool showError,
       String category,
       String type,
       String amount,
@@ -898,7 +906,8 @@ class __$$_QuizStateCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = freezed,
     Object? isLoaded = freezed,
-    Object? isError = freezed,
+    Object? isSubmitting = freezed,
+    Object? showError = freezed,
     Object? category = freezed,
     Object? type = freezed,
     Object? amount = freezed,
@@ -913,9 +922,13 @@ class __$$_QuizStateCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
           ? _value.isLoaded
           : isLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
-      isError: isError == freezed
-          ? _value.isError
-          : isError // ignore: cast_nullable_to_non_nullable
+      isSubmitting: isSubmitting == freezed
+          ? _value.isSubmitting
+          : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showError: showError == freezed
+          ? _value.showError
+          : showError // ignore: cast_nullable_to_non_nullable
               as bool,
       category: category == freezed
           ? _value.category
@@ -943,7 +956,8 @@ class _$_QuizState implements _QuizState {
   const _$_QuizState(
       {required this.isLoading,
       required this.isLoaded,
-      required this.isError,
+      required this.isSubmitting,
+      required this.showError,
       required this.category,
       required this.type,
       required this.amount,
@@ -955,7 +969,9 @@ class _$_QuizState implements _QuizState {
   @override
   final bool isLoaded;
   @override
-  final bool isError;
+  final bool isSubmitting;
+  @override
+  final bool showError;
   @override
   final String category;
   @override
@@ -971,7 +987,7 @@ class _$_QuizState implements _QuizState {
 
   @override
   String toString() {
-    return 'QuizState(isLoading: $isLoading, isLoaded: $isLoaded, isError: $isError, category: $category, type: $type, amount: $amount, results: $results)';
+    return 'QuizState(isLoading: $isLoading, isLoaded: $isLoaded, isSubmitting: $isSubmitting, showError: $showError, category: $category, type: $type, amount: $amount, results: $results)';
   }
 
   @override
@@ -981,7 +997,9 @@ class _$_QuizState implements _QuizState {
             other is _$_QuizState &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.isLoaded, isLoaded) &&
-            const DeepCollectionEquality().equals(other.isError, isError) &&
+            const DeepCollectionEquality()
+                .equals(other.isSubmitting, isSubmitting) &&
+            const DeepCollectionEquality().equals(other.showError, showError) &&
             const DeepCollectionEquality().equals(other.category, category) &&
             const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
@@ -993,7 +1011,8 @@ class _$_QuizState implements _QuizState {
       runtimeType,
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(isLoaded),
-      const DeepCollectionEquality().hash(isError),
+      const DeepCollectionEquality().hash(isSubmitting),
+      const DeepCollectionEquality().hash(showError),
       const DeepCollectionEquality().hash(category),
       const DeepCollectionEquality().hash(type),
       const DeepCollectionEquality().hash(amount),
@@ -1009,7 +1028,8 @@ abstract class _QuizState implements QuizState {
   const factory _QuizState(
       {required final bool isLoading,
       required final bool isLoaded,
-      required final bool isError,
+      required final bool isSubmitting,
+      required final bool showError,
       required final String category,
       required final String type,
       required final String amount,
@@ -1020,7 +1040,9 @@ abstract class _QuizState implements QuizState {
   @override
   bool get isLoaded;
   @override
-  bool get isError;
+  bool get isSubmitting;
+  @override
+  bool get showError;
   @override
   String get category;
   @override

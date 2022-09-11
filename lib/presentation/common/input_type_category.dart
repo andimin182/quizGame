@@ -1,4 +1,4 @@
-class Category {
+class CategoryData {
   static const Map<String, String> categories = {
     'General Knowledge': '9',
     'Entertainment: Books': '10',
@@ -16,24 +16,13 @@ class Category {
   static String initStateValue() => categories[0] ?? '9';
 }
 
-class Type {
-  static const type = [
-    'Multiple Choice',
-    'True/False',
-  ];
+class TypeData {
+  static const Map<String, String> type = {
+    "Multiple Choice": "multiple",
+    "True/False": "boolean",
+  };
 
-  static String initStateKey() => type[0];
+  static String initStateKey() => type.keys.toList()[0];
 
-  static String initStateValue() {
-    final map = getMap();
-    return map[0] ?? 'multiple';
-  }
-
-  static Map<String, String> getMap() {
-    final map = <String, String>{
-      "Multiple Choice": "multiple",
-      "True/False": "boolean",
-    };
-    return map;
-  }
+  static String initStateValue() => type[0] ?? 'multiple';
 }

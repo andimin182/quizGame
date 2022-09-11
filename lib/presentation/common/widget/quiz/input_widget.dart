@@ -15,10 +15,8 @@ class InputWidget extends StatefulWidget {
 
 class _InputWidgetState extends State<InputWidget> {
   late TextEditingController amountController;
-  String categoryValue = Category.initStateKey();
-  String defaultCategory = Category.initStateKey();
-  String typeValue = Type.initStateKey();
-  String defaultType = Type.initStateKey();
+  String? categoryValue;
+  String? typeValue;
 
   @override
   void initState() {
@@ -34,104 +32,114 @@ class _InputWidgetState extends State<InputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 10,
-          ),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: DropdownButton<String>(
-            isExpanded: true,
-            value: typeValue,
-            onChanged: (String? newValue) {
-              BlocProvider.of<QuizBloc>(context).add(
-                QuizEvent.typeChanged(Type.getMap()[newValue] ?? ''),
-              );
-              setState(() {
-                typeValue = newValue ?? defaultType;
-              });
-            },
-            items: Type.type
-                .map<DropdownMenuItem<String>>(
-                  (category) => DropdownMenuItem<String>(
-                    value: category,
-                    child: Text(category),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-        const VerticalSpace(size: 20),
-        Container(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 10,
-          ),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: DropdownButton<String>(
-            isExpanded: true,
-            value: categoryValue,
-            onChanged: (String? newValue) {
-              BlocProvider.of<QuizBloc>(context).add(
-                QuizEvent.categoryChanged(Category.categories[newValue] ?? ''),
-              );
-              setState(() {
-                categoryValue = newValue ?? defaultCategory;
-              });
-            },
-            items: Category.categories.keys
-                .toList()
-                .map<DropdownMenuItem<String>>(
-                  (category) => DropdownMenuItem<String>(
-                    value: category,
-                    child: Text(category),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-        const VerticalSpace(size: 20),
-        Container(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 10,
-          ),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: TextField(
-            onChanged: (value) {
-              BlocProvider.of<QuizBloc>(context).add(
-                QuizEvent.amountChanged(value),
-              );
-            },
-            controller: amountController,
-            decoration: const InputDecoration(
-              hintText: 'Scegli il numero',
+    return Form(
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+            ),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: DropdownButton<String>(
+              hint: const Text('Choose the type'),
+              isExpanded: true,
+              value: typeValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  typeValue = newValue;
+                });
+                final value = TypeData.type[newValue];
+                BlocProvider.of<QuizBloc>(context)
+                    .add(QuizEvent.typeChanged(value ?? ''));
+              },
+              items: TypeData.type.keys
+                  .map<DropdownMenuItem<String>>(
+                    (category) => DropdownMenuItem<String>(
+                      value: category,
+                      child: Text(category),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
-        ),
-        const VerticalSpace(size: 20),
-        ElevatedButton(
-          onPressed: () {
-            BlocProvider.of<QuizBloc>(context).add(
-              const QuizEvent.getQuizPressed(),
-            );
-            context.router.replace(const QuizRoute());
-          },
-          child: const Text(
-            'Comincia il quiz',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+          const VerticalSpace(size: 20),
+          Container(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+            ),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: DropdownButton<String>(
+              disabledHint: const Text('Choose category'),
+              hint: const Text('Choose category'),
+              isExpanded: true,
+              value: categoryValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  categoryValue = newValue;
+                });
+                final value = CategoryData.categories[newValue];
+                BlocProvider.of<QuizBloc>(context).add(
+                  QuizEvent.categoryChanged(value ?? ''),
+                );
+              },
+              items: CategoryData.categories.keys
+                  .map<DropdownMenuItem<String>>(
+                    (category) => DropdownMenuItem<String>(
+                      value: category,
+                      child: Text(category),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          const VerticalSpace(size: 20),
+          Container(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+            ),
+            decoration: BoxDecoration(
               color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TextField(
+              onChanged: (value) {
+                BlocProvider.of<QuizBloc>(context).add(
+                  QuizEvent.amountChanged(
+                    value,
+                  ),
+                );
+              },
+              controller: amountController,
+              decoration: const InputDecoration(
+                hintText: 'Choose the number',
+              ),
             ),
           ),
-        ),
-      ],
+          const VerticalSpace(size: 20),
+          ElevatedButton(
+            onPressed: () {
+              BlocProvider.of<QuizBloc>(context).add(
+                const QuizEvent.getQuizPressed(),
+              );
+
+              context.router.push(const QuizRoute());
+            },
+            child: const Text(
+              'Start the quiz',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
