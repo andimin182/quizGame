@@ -19,7 +19,7 @@ class Amount extends ValueObject<String> {
   List<Object?> get props => [_value];
 
   @override
-  String toString() => 'EmailAddress($_value)';
+  String toString() => 'Amount($_value)';
 
   @override
   Either<ValueFailure<String>, String> get value => _value;

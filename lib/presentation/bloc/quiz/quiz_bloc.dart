@@ -44,7 +44,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             categoryParsed.fold(
               (_) {
                 category = 0;
-                return state.copyWith();
+                return state.copyWith(
+                  showError: true,
+                );
               },
               (catInt) {
                 category = catInt;
@@ -53,18 +55,23 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
                 return amountParsed.fold(
                   (failure) {
                     amount = 0;
-                    return state.copyWith();
+                    return state.copyWith(
+                      showError: true,
+                    );
                   },
                   (amountInt) {
                     amount = amountInt;
                     final typeCheck = inputConverter.checkString(state.type);
                     return typeCheck.fold((failure) {
                       type = '';
-                      return state.copyWith();
+                      return state.copyWith(
+                        showError: true,
+                      );
                     }, (typeStr) {
                       type = typeStr;
                       return state.copyWith(
                         isLoading: true,
+                        showError: false,
                       );
                     });
                   },
@@ -84,12 +91,18 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
             emit(failureOrQuestions.fold(
                 (failure) => state.copyWith(
                       isLoading: false,
+                      showError: true,
                     ),
                 (result) => state.copyWith(
                       results: result,
                       isLoading: false,
+                      showError: false,
                       isLoaded: true,
                     )));
+          } else {
+            emit(state.copyWith(
+              showError: true,
+            ));
           }
         },
         newQuizPressed: (_) {
