@@ -13,9 +13,11 @@ import 'package:auto_route/auto_route.dart';
 
 class QuizPageWidget extends StatefulWidget {
   final List<Question> questions;
+  final String categoryName;
   const QuizPageWidget({
     Key? key,
     required this.questions,
+    required this.categoryName,
   }) : super(key: key);
 
   @override
@@ -36,18 +38,22 @@ class _QuizPageWidgetState extends State<QuizPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<QuizBloc, QuizState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: const Color.fromARGB(255, 26, 4, 30),
-          appBar: AppBar(
-              title: Text(
-            CategoryData.categories.keys.firstWhere(
-                (k) => CategoryData.categories[k] == state.category),
-          )),
-          body: BlocProvider(
-            create: (context) => sL<QuestionBloc>(),
-            child: PageView.builder(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sL<QuestionBloc>()),
+        BlocProvider(create: (context) => sL<QuizBloc>()),
+      ],
+      child: BlocBuilder<QuizBloc, QuizState>(
+        builder: (context, state) {
+          return Scaffold(
+            backgroundColor: const Color.fromARGB(255, 26, 4, 30),
+            appBar: AppBar(
+                title: Text(
+              CategoryData.categories.keys.firstWhere(
+                (k) => CategoryData.categories[k] == widget.categoryName,
+              ),
+            )),
+            body: PageView.builder(
               physics: const NeverScrollableScrollPhysics(),
               controller: _pageController,
               itemCount: widget.questions.length,
@@ -171,9 +177,9 @@ class _QuizPageWidgetState extends State<QuizPageWidget> {
                 );
               }),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

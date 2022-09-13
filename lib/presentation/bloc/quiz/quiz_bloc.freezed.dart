@@ -794,9 +794,9 @@ mixin _$QuizState {
   bool get isLoaded => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
   bool get showError => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
-  String get amount => throw _privateConstructorUsedError;
+  Category get category => throw _privateConstructorUsedError;
+  Type get type => throw _privateConstructorUsedError;
+  Amount get amount => throw _privateConstructorUsedError;
   List<Question> get results => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -813,9 +813,9 @@ abstract class $QuizStateCopyWith<$Res> {
       bool isLoaded,
       bool isSubmitting,
       bool showError,
-      String category,
-      String type,
-      String amount,
+      Category category,
+      Type type,
+      Amount amount,
       List<Question> results});
 }
 
@@ -858,15 +858,15 @@ class _$QuizStateCopyWithImpl<$Res> implements $QuizStateCopyWith<$Res> {
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Category,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Type,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Amount,
       results: results == freezed
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
@@ -886,9 +886,9 @@ abstract class _$$_QuizStateCopyWith<$Res> implements $QuizStateCopyWith<$Res> {
       bool isLoaded,
       bool isSubmitting,
       bool showError,
-      String category,
-      String type,
-      String amount,
+      Category category,
+      Type type,
+      Amount amount,
       List<Question> results});
 }
 
@@ -933,15 +933,15 @@ class __$$_QuizStateCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Category,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Type,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Amount,
       results: results == freezed
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
@@ -973,11 +973,11 @@ class _$_QuizState implements _QuizState {
   @override
   final bool showError;
   @override
-  final String category;
+  final Category category;
   @override
-  final String type;
+  final Type type;
   @override
-  final String amount;
+  final Amount amount;
   final List<Question> _results;
   @override
   List<Question> get results {
@@ -1030,9 +1030,9 @@ abstract class _QuizState implements QuizState {
       required final bool isLoaded,
       required final bool isSubmitting,
       required final bool showError,
-      required final String category,
-      required final String type,
-      required final String amount,
+      required final Category category,
+      required final Type type,
+      required final Amount amount,
       required final List<Question> results}) = _$_QuizState;
 
   @override
@@ -1044,11 +1044,11 @@ abstract class _QuizState implements QuizState {
   @override
   bool get showError;
   @override
-  String get category;
+  Category get category;
   @override
-  String get type;
+  Type get type;
   @override
-  String get amount;
+  Amount get amount;
   @override
   List<Question> get results;
   @override

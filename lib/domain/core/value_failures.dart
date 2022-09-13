@@ -18,4 +18,12 @@ abstract class ValueFailure<T> with _$ValueFailure<T> {
   const factory ValueFailure.invalidAmount({
     required String failedValue,
   }) = InvalidAmount<T>;
+  const factory ValueFailure.invalidCategory({
+    required String failedValue,
+  }) = InvalidCategory<T>;
+  const factory ValueFailure.invalidType({
+    required String failedValue,
+  }) = InvalidType<T>;
+
+  const factory ValueFailure.emptyString() = EmptyString;
 }

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:quiz/core/util/input_converter.dart';
 import 'package:quiz/data/models/request/quiz_request.dart';
 import 'package:quiz/domain/entities/quiz_entity.dart';
+import 'package:quiz/domain/quiz/quiz_value_objects_impl.dart';
 import 'package:quiz/domain/usecases/quiz_usecase.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -12,9 +13,6 @@ part 'quiz_bloc.freezed.dart';
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final GetQuestions getQuestions;
   final InputConverter inputConverter;
-  late int category;
-  late int amount;
-  late String type;
 
   QuizBloc({
     required this.getQuestions,
@@ -24,84 +22,58 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       await event.map(
         categoryChanged: (e) {
           emit(state.copyWith(
-            category: e.categoryStr,
+            category: Category(e.categoryStr),
           ));
         },
         amountChanged: (e) {
           emit(state.copyWith(
-            amount: e.amountStr,
+            amount: Amount(e.amountStr),
           ));
         },
         typeChanged: (e) {
           emit(state.copyWith(
-            type: e.typeStr,
+            type: Type(e.typeStr),
           ));
         },
         getQuizPressed: (e) async {
-          final categoryParsed =
-              inputConverter.stringToUnsignedInteger(state.category);
           emit(
-            categoryParsed.fold(
-              (_) {
-                category = 0;
-                return state.copyWith(
-                  showError: true,
-                );
-              },
-              (catInt) {
-                category = catInt;
-                final amountParsed =
-                    inputConverter.stringToUnsignedInteger(state.amount);
-                return amountParsed.fold(
-                  (failure) {
-                    amount = 0;
-                    return state.copyWith(
-                      showError: true,
-                    );
-                  },
-                  (amountInt) {
-                    amount = amountInt;
-                    final typeCheck = inputConverter.checkString(state.type);
-                    return typeCheck.fold((failure) {
-                      type = '';
-                      return state.copyWith(
-                        showError: true,
-                      );
-                    }, (typeStr) {
-                      type = typeStr;
-                      return state.copyWith(
-                        isLoading: true,
-                        showError: false,
-                      );
-                    });
-                  },
-                );
-              },
+            state.copyWith(
+              isSubmitting: true,
+              isLoading: true,
             ),
           );
-          if (category != 0 && amount != 0 && type != '') {
+          if (state.category.isValid() &&
+              state.amount.isValid() &&
+              state.type.isValid()) {
             final request = QuestionRequest(
-              amount: amount,
-              category: category,
-              type: type,
+              amount: int.parse(state.amount.getOrCrash()),
+              category: state.category.getOrCrash(),
+              type: state.type.getOrCrash(),
             );
 
             final failureOrQuestions =
                 await getQuestions.execute(request: request);
-            emit(failureOrQuestions.fold(
-                (failure) => state.copyWith(
-                      isLoading: false,
-                      showError: true,
-                    ),
-                (result) => state.copyWith(
-                      results: result,
-                      isLoading: false,
-                      showError: false,
-                      isLoaded: true,
-                    )));
+            emit(failureOrQuestions.fold((failure) {
+              return state.copyWith(
+                isSubmitting: false,
+                isLoading: false,
+                showError: true,
+              );
+            }, (result) {
+              return state.copyWith(
+                results: result,
+                isLoading: false,
+                showError: false,
+                isLoaded: true,
+                isSubmitting: false,
+              );
+            }));
           } else {
             emit(state.copyWith(
+              isLoading: false,
               showError: true,
+              isLoaded: false,
+              isSubmitting: false,
             ));
           }
         },

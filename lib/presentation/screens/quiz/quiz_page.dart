@@ -32,6 +32,7 @@ class QuizPage extends StatelessWidget {
         } else if (state.isLoaded) {
           return QuizPageWidget(
             questions: state.results,
+            categoryName: state.category.getOrCrash().toString(),
           );
         }
         return const Center(

@@ -6,7 +6,7 @@ import 'package:quiz/domain/core/value_failures.dart';
 
 @immutable
 abstract class ValueObject<T> extends Equatable {
-  final Either<ValueFailure<T>, T> _value;
+  final Either<ValueFailure<T>, dynamic> _value;
 
   const ValueObject(this._value);
 
@@ -18,7 +18,7 @@ abstract class ValueObject<T> extends Equatable {
     return value.fold((f) => throw UnexpectedValueError(f), (r) => r);
   }
 
-  Either<ValueFailure<T>, T> get value;
+  Either<ValueFailure<T>, dynamic> get value;
 
   @override
   List<Object?> get props => [_value];
@@ -27,7 +27,7 @@ abstract class ValueObject<T> extends Equatable {
   String toString();
 }
 
-@immutable
+/* @immutable
 abstract class InputValueObject<T> extends Equatable {
   final Either<ValueFailure<T>, dynamic> _value;
 
@@ -48,4 +48,4 @@ abstract class InputValueObject<T> extends Equatable {
 
   @override
   String toString();
-}
+} */

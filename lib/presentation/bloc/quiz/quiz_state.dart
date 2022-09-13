@@ -7,21 +7,21 @@ class QuizState with _$QuizState {
     required bool isLoaded,
     required bool isSubmitting,
     required bool showError,
-    required String category,
-    required String type,
-    required String amount,
+    required Category category,
+    required Type type,
+    required Amount amount,
     required List<Question> results,
   }) = _QuizState;
 
   factory QuizState.initial() {
-    return const QuizState(
+    return QuizState(
       isLoading: false,
       isLoaded: false,
       isSubmitting: false,
       showError: false,
-      category: '',
-      type: '',
-      amount: '',
+      category: Category(''),
+      type: Type(''),
+      amount: Amount(''),
       results: [],
     );
   }
