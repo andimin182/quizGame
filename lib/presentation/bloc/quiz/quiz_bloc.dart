@@ -73,7 +73,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
               isLoading: false,
               showError: true,
               isLoaded: false,
-              isSubmitting: false,
+              isSubmitting: true,
             ));
           }
         },

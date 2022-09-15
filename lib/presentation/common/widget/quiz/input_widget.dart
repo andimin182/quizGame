@@ -35,130 +35,156 @@ class _InputWidgetState extends State<InputWidget> {
     return BlocListener<QuizBloc, QuizState>(
       listener: (context, state) {
         if (state.isLoaded) {
-          context.router.push(QuizRoute(
+          context.router.replace(QuizRoute(
             questions: state.results,
             categoryName: state.category.getOrCrash().toString(),
           ));
         }
       },
-      child: Form(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: DropdownButton<String>(
-                hint: const Text('Choose the type'),
-                isExpanded: true,
-                value: typeValue,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    typeValue = newValue;
-                  });
-                  final value = TypeData.type[newValue];
-                  BlocProvider.of<QuizBloc>(context)
-                      .add(QuizEvent.typeChanged(value ?? ''));
-                },
-                items: TypeData.type.keys
-                    .map<DropdownMenuItem<String>>(
-                      (category) => DropdownMenuItem<String>(
-                        value: category,
-                        child: Text(category),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-            const VerticalSpace(size: 20),
-            Container(
-              padding: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: DropdownButton<String>(
-                disabledHint: const Text('Choose category'),
-                hint: const Text('Choose category'),
-                isExpanded: true,
-                value: categoryValue,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    categoryValue = newValue;
-                  });
-                  final value = CategoryData.categories[newValue];
-                  BlocProvider.of<QuizBloc>(context).add(
-                    QuizEvent.categoryChanged(value ?? ''),
-                  );
-                },
-                items: CategoryData.categories.keys
-                    .map<DropdownMenuItem<String>>(
-                      (category) => DropdownMenuItem<String>(
-                        value: category,
-                        child: Text(category),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-            const VerticalSpace(size: 20),
-            Container(
-              padding: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-                onChanged: (value) {
-                  BlocProvider.of<QuizBloc>(context).add(
-                    QuizEvent.amountChanged(
-                      value,
+      child: BlocBuilder<QuizBloc, QuizState>(
+        builder: (context, state) {
+          return Form(
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                  ),
+                  decoration: BoxDecoration(
+                      border: state.isSubmitting
+                          ? state.type.isValid()
+                              ? null
+                              : Border.all(
+                                  color: Colors.red,
+                                  width: 5.0,
+                                )
+                          : null,
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: DropdownButton<String>(
+                    hint: const Text('Choose the type'),
+                    isExpanded: true,
+                    value: typeValue,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        typeValue = newValue;
+                      });
+                      final value = TypeData.type[newValue];
+                      BlocProvider.of<QuizBloc>(context)
+                          .add(QuizEvent.typeChanged(value ?? ''));
+                    },
+                    items: TypeData.type.keys
+                        .map<DropdownMenuItem<String>>(
+                          (category) => DropdownMenuItem<String>(
+                            value: category,
+                            child: Text(category),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                const VerticalSpace(size: 20),
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                  ),
+                  decoration: BoxDecoration(
+                      border: state.isSubmitting
+                          ? state.category.isValid()
+                              ? null
+                              : Border.all(
+                                  color: Colors.red,
+                                  width: 5.0,
+                                )
+                          : null,
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: DropdownButton<String>(
+                    disabledHint: const Text('Choose category'),
+                    hint: const Text('Choose category'),
+                    isExpanded: true,
+                    value: categoryValue,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        categoryValue = newValue;
+                      });
+                      final value = CategoryData.categories[newValue];
+                      BlocProvider.of<QuizBloc>(context).add(
+                        QuizEvent.categoryChanged(value ?? ''),
+                      );
+                    },
+                    items: CategoryData.categories.keys
+                        .map<DropdownMenuItem<String>>(
+                          (category) => DropdownMenuItem<String>(
+                            value: category,
+                            child: Text(category),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                const VerticalSpace(size: 20),
+                Container(
+                  decoration: BoxDecoration(
+                    border: state.isSubmitting
+                        ? state.amount.isValid()
+                            ? null
+                            : Border.all(
+                                color: Colors.red,
+                                width: 5.0,
+                              )
+                        : null,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      BlocProvider.of<QuizBloc>(context).add(
+                        QuizEvent.amountChanged(
+                          value,
+                        ),
+                      );
+                    },
+                    controller: amountController,
+                    decoration: const InputDecoration(
+                      hintText: 'Choose the number',
                     ),
-                  );
-                },
-                controller: amountController,
-                decoration: const InputDecoration(
-                  hintText: 'Choose the number',
+                  ),
                 ),
-              ),
-            ),
-            const VerticalSpace(size: 20),
-            ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<QuizBloc>(context).add(
-                  const QuizEvent.getQuizPressed(),
-                );
-              },
-              child: const Text(
-                'Start the quiz',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.white,
+                const VerticalSpace(size: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<QuizBloc>(context).add(
+                      const QuizEvent.getQuizPressed(),
+                    );
+                  },
+                  child: const Text(
+                    'Start the quiz',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const VerticalSpace(size: 20),
-            BlocBuilder<QuizBloc, QuizState>(
-              builder: (context, state) {
-                return Visibility(
+                const VerticalSpace(size: 20),
+                Visibility(
                   visible: state.isLoading,
                   child: const LinearProgressIndicator(
                     backgroundColor: Colors.white,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                   ),
-                );
-              },
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
