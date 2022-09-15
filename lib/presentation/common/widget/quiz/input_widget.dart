@@ -32,113 +32,133 @@ class _InputWidgetState extends State<InputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
+    return BlocListener<QuizBloc, QuizState>(
+      listener: (context, state) {
+        if (state.isLoaded) {
+          context.router.push(QuizRoute(
+            questions: state.results,
+            categoryName: state.category.getOrCrash().toString(),
+          ));
+        }
+      },
+      child: Form(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: DropdownButton<String>(
+                hint: const Text('Choose the type'),
+                isExpanded: true,
+                value: typeValue,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    typeValue = newValue;
+                  });
+                  final value = TypeData.type[newValue];
+                  BlocProvider.of<QuizBloc>(context)
+                      .add(QuizEvent.typeChanged(value ?? ''));
+                },
+                items: TypeData.type.keys
+                    .map<DropdownMenuItem<String>>(
+                      (category) => DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
-            child: DropdownButton<String>(
-              hint: const Text('Choose the type'),
-              isExpanded: true,
-              value: typeValue,
-              onChanged: (String? newValue) {
-                setState(() {
-                  typeValue = newValue;
-                });
-                final value = TypeData.type[newValue];
-                BlocProvider.of<QuizBloc>(context)
-                    .add(QuizEvent.typeChanged(value ?? ''));
-              },
-              items: TypeData.type.keys
-                  .map<DropdownMenuItem<String>>(
-                    (category) => DropdownMenuItem<String>(
-                      value: category,
-                      child: Text(category),
+            const VerticalSpace(size: 20),
+            Container(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: DropdownButton<String>(
+                disabledHint: const Text('Choose category'),
+                hint: const Text('Choose category'),
+                isExpanded: true,
+                value: categoryValue,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    categoryValue = newValue;
+                  });
+                  final value = CategoryData.categories[newValue];
+                  BlocProvider.of<QuizBloc>(context).add(
+                    QuizEvent.categoryChanged(value ?? ''),
+                  );
+                },
+                items: CategoryData.categories.keys
+                    .map<DropdownMenuItem<String>>(
+                      (category) => DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            const VerticalSpace(size: 20),
+            Container(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextField(
+                onChanged: (value) {
+                  BlocProvider.of<QuizBloc>(context).add(
+                    QuizEvent.amountChanged(
+                      value,
                     ),
-                  )
-                  .toList(),
+                  );
+                },
+                controller: amountController,
+                decoration: const InputDecoration(
+                  hintText: 'Choose the number',
+                ),
+              ),
             ),
-          ),
-          const VerticalSpace(size: 20),
-          Container(
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
-            ),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
-            child: DropdownButton<String>(
-              disabledHint: const Text('Choose category'),
-              hint: const Text('Choose category'),
-              isExpanded: true,
-              value: categoryValue,
-              onChanged: (String? newValue) {
-                setState(() {
-                  categoryValue = newValue;
-                });
-                final value = CategoryData.categories[newValue];
+            const VerticalSpace(size: 20),
+            ElevatedButton(
+              onPressed: () {
                 BlocProvider.of<QuizBloc>(context).add(
-                  QuizEvent.categoryChanged(value ?? ''),
+                  const QuizEvent.getQuizPressed(),
                 );
               },
-              items: CategoryData.categories.keys
-                  .map<DropdownMenuItem<String>>(
-                    (category) => DropdownMenuItem<String>(
-                      value: category,
-                      child: Text(category),
-                    ),
-                  )
-                  .toList(),
+              child: const Text(
+                'Start the quiz',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
-          const VerticalSpace(size: 20),
-          Container(
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: TextField(
-              onChanged: (value) {
-                BlocProvider.of<QuizBloc>(context).add(
-                  QuizEvent.amountChanged(
-                    value,
+            const VerticalSpace(size: 20),
+            BlocBuilder<QuizBloc, QuizState>(
+              builder: (context, state) {
+                return Visibility(
+                  visible: state.isLoading,
+                  child: const LinearProgressIndicator(
+                    backgroundColor: Colors.white,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                   ),
                 );
               },
-              controller: amountController,
-              decoration: const InputDecoration(
-                hintText: 'Choose the number',
-              ),
             ),
-          ),
-          const VerticalSpace(size: 20),
-          ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<QuizBloc>(context).add(
-                const QuizEvent.getQuizPressed(),
-              );
-
-              context.router.push(const QuizRoute());
-            },
-            child: const Text(
-              'Start the quiz',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

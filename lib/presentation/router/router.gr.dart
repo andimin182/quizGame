@@ -14,6 +14,7 @@
 import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:flutter/material.dart' as _i6;
 
+import '../../domain/entities/quiz_entity.dart' as _i7;
 import '../screens/auth/auth_page.dart' as _i1;
 import '../screens/quiz/home_page.dart' as _i2;
 import '../screens/quiz/quiz_page.dart' as _i3;
@@ -34,8 +35,13 @@ class AppRouter extends _i5.RootStackRouter {
           routeData: routeData, child: const _i2.HomePage());
     },
     QuizRoute.name: (routeData) {
+      final args = routeData.argsAs<QuizRouteArgs>();
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.QuizPage());
+          routeData: routeData,
+          child: _i3.QuizPage(
+              key: args.key,
+              questions: args.questions,
+              categoryName: args.categoryName));
     },
     ResultsRoute.name: (routeData) {
       final args = routeData.argsAs<ResultsRouteArgs>();
@@ -75,10 +81,33 @@ class HomeRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.QuizPage]
-class QuizRoute extends _i5.PageRouteInfo<void> {
-  const QuizRoute() : super(QuizRoute.name, path: '/quiz');
+class QuizRoute extends _i5.PageRouteInfo<QuizRouteArgs> {
+  QuizRoute(
+      {_i6.Key? key,
+      required List<_i7.Question> questions,
+      required String categoryName})
+      : super(QuizRoute.name,
+            path: '/quiz',
+            args: QuizRouteArgs(
+                key: key, questions: questions, categoryName: categoryName));
 
   static const String name = 'QuizRoute';
+}
+
+class QuizRouteArgs {
+  const QuizRouteArgs(
+      {this.key, required this.questions, required this.categoryName});
+
+  final _i6.Key? key;
+
+  final List<_i7.Question> questions;
+
+  final String categoryName;
+
+  @override
+  String toString() {
+    return 'QuizRouteArgs{key: $key, questions: $questions, categoryName: $categoryName}';
+  }
 }
 
 /// generated route for
