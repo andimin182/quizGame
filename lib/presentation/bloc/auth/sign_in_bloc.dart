@@ -22,6 +22,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             state.copyWith(
               email: EmailAddress(e.emailStr),
               authFailureOrSuccessOption: none(),
+              isSubmitting: false,
+              showErrorDialog: false,
             ),
           );
         },
@@ -30,6 +32,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             state.copyWith(
               password: Password(e.passStr),
               authFailureOrSuccessOption: none(),
+              isSubmitting: false,
+              showErrorDialog: false,
             ),
           );
         },
@@ -60,12 +64,20 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     })
         forwardedCall,
   ) async {
+    emit(
+      state.copyWith(
+        isSubmitting: true,
+        showErrorDialog: false,
+        authFailureOrSuccessOption: none(),
+      ),
+    );
     Either<AuthFailure, Unit>? failureOrSuccess;
 
     if (state.email.isValid() && state.password.isValid()) {
       emit(
         state.copyWith(
           isSubmitting: true,
+          showErrorDialog: false,
           authFailureOrSuccessOption: none(),
         ),
       );
@@ -74,14 +86,25 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         email: state.email,
         password: state.password,
       );
-    }
 
-    emit(
-      state.copyWith(
-        isSubmitting: false,
-        showErrorDialog: true,
-        authFailureOrSuccessOption: optionOf(failureOrSuccess),
-      ),
-    );
+      failureOrSuccess.fold(
+          (_) => emit(state.copyWith(
+                isSubmitting: false,
+                showErrorDialog: true,
+                authFailureOrSuccessOption: optionOf(failureOrSuccess),
+              )),
+          (_) => emit(state.copyWith(
+              isSubmitting: false,
+              showErrorDialog: false,
+              authFailureOrSuccessOption: optionOf(failureOrSuccess))));
+    } else {
+      emit(
+        state.copyWith(
+          isSubmitting: false,
+          showErrorDialog: true,
+          authFailureOrSuccessOption: optionOf(failureOrSuccess),
+        ),
+      );
+    }
   }
 }

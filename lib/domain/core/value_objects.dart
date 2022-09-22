@@ -26,26 +26,3 @@ abstract class ValueObject<T> extends Equatable {
   @override
   String toString();
 }
-
-/* @immutable
-abstract class InputValueObject<T> extends Equatable {
-  final Either<ValueFailure<T>, dynamic> _value;
-
-  const InputValueObject(this._value);
-
-  bool isValid() => value.isRight();
-
-  /// Throws [UnexpectedValueError] containing the [ValueFailure] if there is
-  /// a failure. Otherwise returns the value.
-  dynamic getOrCrash() {
-    return value.fold((f) => throw UnexpectedValueError(f), (r) => r);
-  }
-
-  Either<ValueFailure<T>, dynamic> get value;
-
-  @override
-  List<Object?> get props => [_value];
-
-  @override
-  String toString();
-} */

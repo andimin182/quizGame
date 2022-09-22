@@ -3,7 +3,9 @@ import 'package:injectable/injectable.dart';
 import 'package:quiz/domain/core/auth_failures.dart';
 import 'package:quiz/domain/auth/value_objects_impl.dart';
 import 'package:dartz/dartz.dart';
+import 'package:quiz/domain/entities/user.dart' as entity;
 import 'package:quiz/domain/repositories/auth/auth_provider.dart';
+import 'package:quiz/data/repositories/firebase_to_user_mapping.dart';
 
 /// Firebase authentication service provider
 @LazySingleton(as: AuthProvider)
@@ -59,5 +61,22 @@ class FirebaseAuthProvider implements AuthProvider {
         return const Left(AuthFailure.serverError());
       }
     }
+  }
+
+  @override
+  Option<entity.User> getSignedInUser() {
+    final user = _firebaseAuth.currentUser;
+    // optionOf return some if user is not null, otherwise return none
+    return optionOf(user?.toDomain());
+  }
+
+  @override
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
+  @override
+  Option<entity.User> getCurrentUser() {
+    return optionOf(_firebaseAuth.currentUser?.toDomain());
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz/injection.dart';
 import 'package:quiz/injection_container.dart' as di;
+import 'package:quiz/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quiz/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:quiz/presentation/bloc/quiz/quiz_bloc.dart';
 import 'package:quiz/presentation/router/router.gr.dart';
@@ -33,6 +34,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<SignInBloc>(),
         ),
+        BlocProvider(
+          create: ((context) =>
+              getIt<AuthBloc>()..add(const AuthEvent.getAuthCheckRequested())),
+        )
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quiz/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:quiz/presentation/common/const/colors.dart';
 import 'package:quiz/presentation/common/widget/vertical_space.dart';
@@ -25,7 +26,32 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInBloc, SignInState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state.showErrorDialog) {
+          final snackBar = SnackBar(
+            content: const Text('Invalid email and password combination'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {},
+            ),
+          );
+
+          // Find the ScaffoldMessenger in the widget tree
+          // and use it to show a SnackBar.
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+        state.authFailureOrSuccessOption.fold(
+          () => null,
+          (_) {
+            context.router.replace(
+              const HomeRoute(),
+            );
+            BlocProvider.of<AuthBloc>(context).add(
+              const AuthEvent.getAuthCheckRequested(),
+            );
+          },
+        );
+      },
       builder: (context, state) {
         return Scaffold(
           backgroundColor: mainColor,
@@ -67,6 +93,18 @@ class _AuthPageState extends State<AuthPage> {
                       Icons.email_outlined,
                       color: mainColor,
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.green,
+                        width: 3.0,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 3.0,
+                      ),
+                    ),
                     border: OutlineInputBorder(),
                     hintText: 'Insert your email',
                     hintStyle: TextStyle(
@@ -99,7 +137,23 @@ class _AuthPageState extends State<AuthPage> {
                       Icons.password_sharp,
                       color: mainColor,
                     ),
-                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.green,
+                        width: 3.0,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 3.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 3.0,
+                      ),
+                    ),
                     hintText: 'Insert your password',
                     hintStyle: TextStyle(
                       color: mainColor,
@@ -122,7 +176,6 @@ class _AuthPageState extends State<AuthPage> {
                             BlocProvider.of<SignInBloc>(context).add(
                                 const SignInEvent
                                     .signInWithEmailAndPasswordPressed());
-                            context.router.replace(const HomeRoute());
                           },
                           child: const Text(
                             'Sign In',
@@ -155,7 +208,15 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                     ),
                   ],
-                )
+                ),
+                const VerticalSpace(size: 25),
+                Visibility(
+                  visible: state.isSubmitting,
+                  child: const LinearProgressIndicator(
+                    backgroundColor: Colors.white,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ),
+                ),
               ],
             ),
           ),

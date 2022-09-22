@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:quiz/domain/core/value_failures.dart';
 import 'package:quiz/domain/core/validators.dart';
 import 'package:quiz/domain/core/value_objects.dart';
+import 'package:uuid/uuid.dart';
 
 class EmailAddress extends ValueObject<String> {
   final Either<ValueFailure<String>, String> _value;
@@ -45,4 +46,29 @@ class Password extends ValueObject<String> {
 
   @override
   Either<ValueFailure<String>, String> get value => _value;
+}
+
+class UniqueId extends ValueObject<String> {
+  final Either<ValueFailure<String>, String> _value;
+
+  factory UniqueId() {
+    return UniqueId._(right(const Uuid().v1()));
+  }
+
+  factory UniqueId.fromUniqueString(String uniqueId) {
+    return UniqueId._(
+      right(uniqueId),
+    );
+  }
+
+  const UniqueId._(this._value) : super(_value);
+
+  @override
+  String toString() => 'UniqueId($_value)';
+
+  @override
+  List<Object?> get props => [_value];
+
+  @override
+  Either<ValueFailure<String>, dynamic> get value => _value;
 }
