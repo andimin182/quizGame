@@ -48,66 +48,64 @@ class _AnswerCardState extends State<AnswerCard> {
         }
       },
       builder: (context, state) {
-        return Expanded(
-          child: InkWell(
-            onTap: () {
-              widget.onTap();
-              isTapped = true;
-            },
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(25),
-                  width: 350,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      border: isTapped && state.status == QuizStatus.correct ||
+        return InkWell(
+          onTap: () {
+            widget.onTap();
+            isTapped = true;
+          },
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(25),
+                width: 350,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    border: isTapped && state.status == QuizStatus.correct ||
+                            isCorrectAnswer && state.answered
+                        ? Border.all(
+                            color: Colors.green,
+                            width: 5.0,
+                          )
+                        : isTapped && state.status == QuizStatus.incorrect
+                            ? Border.all(
+                                color: Colors.red,
+                                width: 5.0,
+                              )
+                            : null),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      HtmlCharacterEntities.decode(widget.answer),
+                      style: const TextStyle(
+                        color: mainColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Visibility(
+                      visible: state.answered,
+                      child: isTapped && state.status == QuizStatus.correct ||
                               isCorrectAnswer && state.answered
-                          ? Border.all(
+                          ? const Icon(
+                              Icons.check_circle_outline_outlined,
                               color: Colors.green,
-                              width: 5.0,
                             )
                           : isTapped && state.status == QuizStatus.incorrect
-                              ? Border.all(
+                              ? const Icon(
+                                  Icons.highlight_off_outlined,
                                   color: Colors.red,
-                                  width: 5.0,
                                 )
-                              : null),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        HtmlCharacterEntities.decode(widget.answer),
-                        style: const TextStyle(
-                          color: mainColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      Visibility(
-                        visible: state.answered,
-                        child: isTapped && state.status == QuizStatus.correct ||
-                                isCorrectAnswer && state.answered
-                            ? const Icon(
-                                Icons.check_circle_outline_outlined,
-                                color: Colors.green,
-                              )
-                            : isTapped && state.status == QuizStatus.incorrect
-                                ? const Icon(
-                                    Icons.highlight_off_outlined,
-                                    color: Colors.red,
-                                  )
-                                : const SizedBox(width: 0, height: 0),
-                      ),
-                    ],
-                  ),
+                              : const SizedBox(width: 0, height: 0),
+                    ),
+                  ],
                 ),
-                const VerticalSpace(
-                  size: 10,
-                ),
-              ],
-            ),
+              ),
+              const VerticalSpace(
+                size: 10,
+              ),
+            ],
           ),
         );
       },

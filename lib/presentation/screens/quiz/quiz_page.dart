@@ -97,27 +97,29 @@ class _QuizPageState extends State<QuizPage> {
                     const VerticalSpace(size: 15),
                     SizedBox(
                       height: 400,
-                      child: ListView(
-                        children: [
-                          ...widget.questions[index].answers!
-                              .map((answer) => AnswerCard(
-                                    answer: answer,
-                                    correctAnswer:
-                                        widget.questions[index].correctAnswer,
-                                    onTap: () {
-                                      BlocProvider.of<QuestionBloc>(context)
-                                          .add(SubmitAnswer(
-                                        submittedAnswer: answer,
-                                        correctAnswer: widget
-                                            .questions[index].correctAnswer,
-                                        numberQuestions:
-                                            widget.questions.length,
-                                        currentQuestion: index + 1,
-                                      ));
-                                    },
-                                  ))
-                              .toList(),
-                        ],
+                      child: Center(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget.questions[index].answers!.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              return AnswerCard(
+                                answer: widget.questions[index].answers![i],
+                                correctAnswer:
+                                    widget.questions[index].correctAnswer,
+                                onTap: () {
+                                  BlocProvider.of<QuestionBloc>(context).add(
+                                    SubmitAnswer(
+                                      submittedAnswer:
+                                          widget.questions[index].answers![i],
+                                      correctAnswer:
+                                          widget.questions[index].correctAnswer,
+                                      numberQuestions: widget.questions.length,
+                                      currentQuestion: index + 1,
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
                       ),
                     ),
                     const VerticalSpace(size: 20),
