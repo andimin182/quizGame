@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,15 +15,15 @@ class SplashPage extends StatelessWidget {
       listener: ((context, state) {
         state.map(
           initial: (_) {
-            print('unauthenticated initial');
+            log('unauthenticated initial');
             context.router.replace(const AuthRoute());
           },
           authenticated: (_) {
-            print('authenticated');
+            log('authenticated');
             context.router.replace(const HomeRoute());
           },
           unauthenticated: (_) {
-            print('unauthenticated');
+            log('unauthenticated');
             context.router.replace(const AuthRoute());
           },
         );

@@ -97,7 +97,7 @@ class _QuizPageState extends State<QuizPage> {
                     const VerticalSpace(size: 15),
                     SizedBox(
                       height: 400,
-                      child: Column(
+                      child: ListView(
                         children: [
                           ...widget.questions[index].answers!
                               .map((answer) => AnswerCard(

@@ -39,18 +39,24 @@ class _AuthPageState extends State<AuthPage> {
           // Find the ScaffoldMessenger in the widget tree
           // and use it to show a SnackBar.
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } else {
+          state.authFailureOrSuccessOption.fold(
+            () => null,
+            (option) {
+              option.fold(
+                (_) => null,
+                (_) {
+                  BlocProvider.of<AuthBloc>(context).add(
+                    const AuthEvent.getAuthCheckRequested(),
+                  );
+                  context.router.replace(
+                    const HomeRoute(),
+                  );
+                },
+              );
+            },
+          );
         }
-        state.authFailureOrSuccessOption.fold(
-          () => null,
-          (_) {
-            context.router.replace(
-              const HomeRoute(),
-            );
-            BlocProvider.of<AuthBloc>(context).add(
-              const AuthEvent.getAuthCheckRequested(),
-            );
-          },
-        );
       },
       builder: (context, state) {
         return Scaffold(
