@@ -63,6 +63,7 @@ class _InputWidgetState extends State<InputWidget> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButton<String>(
+                    underline: const SizedBox(),
                     hint: const Text('Choose the type'),
                     isExpanded: true,
                     value: typeValue,
@@ -102,6 +103,7 @@ class _InputWidgetState extends State<InputWidget> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButton<String>(
+                    underline: const SizedBox(),
                     disabledHint: const Text('Choose category'),
                     hint: const Text('Choose category'),
                     isExpanded: true,
@@ -153,12 +155,17 @@ class _InputWidgetState extends State<InputWidget> {
                     },
                     controller: amountController,
                     decoration: const InputDecoration(
-                      hintText: 'Choose the number',
+                      border: InputBorder.none,
+                      hintText: 'Choose amount',
                     ),
                   ),
                 ),
                 const VerticalSpace(size: 20),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      side: const BorderSide(
+                    color: Colors.white,
+                  )),
                   onPressed: () {
                     BlocProvider.of<QuizBloc>(context).add(
                       const QuizEvent.getQuizPressed(),
