@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/core/constants.dart';
 import 'package:quiz/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quiz/presentation/common/const/colors.dart';
 import 'package:quiz/presentation/common/widget/quiz/input_card.dart';
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const VerticalSpace(size: 20),
                 inputQuestionCard(
-                  height: 140,
+                  height: heigth / 5.86,
                   answer: 'Choose your quiz',
                   colorString: Colors.white,
                   colorBg: mainColor,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html_character_entities/html_character_entities.dart';
+import 'package:quiz/core/constants.dart';
 
 import 'package:quiz/presentation/bloc/quiz/question_bloc.dart';
 import 'package:quiz/presentation/common/const/colors.dart';
@@ -57,7 +58,7 @@ class _AnswerCardState extends State<AnswerCard> {
             children: [
               Container(
                 padding: const EdgeInsets.all(25),
-                width: 350,
+                width: width / 1.1,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
@@ -104,8 +105,8 @@ class _AnswerCardState extends State<AnswerCard> {
                   ],
                 ),
               ),
-              const VerticalSpace(
-                size: 10,
+              VerticalSpace(
+                size: heigth / 82.05,
               ),
             ],
           ),

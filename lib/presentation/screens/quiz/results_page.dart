@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/core/constants.dart';
 import 'package:quiz/injection_container.dart';
 import 'package:quiz/presentation/bloc/quiz/quiz_bloc.dart';
 import 'package:quiz/presentation/common/widget/vertical_space.dart';
@@ -42,10 +43,10 @@ class ResultsPage extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              const VerticalSpace(size: 50),
+              VerticalSpace(size: heigth / 16.41),
               SizedBox(
-                height: 50,
-                width: 120,
+                height: heigth / 16.41,
+                width: width / 3,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

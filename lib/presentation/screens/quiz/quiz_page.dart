@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html_character_entities/html_character_entities.dart';
+import 'package:quiz/core/constants.dart';
 import 'package:quiz/domain/entities/quiz_entity.dart';
 import 'package:quiz/presentation/bloc/quiz/question_bloc.dart';
 import 'package:quiz/presentation/bloc/quiz/quiz_bloc.dart';
@@ -80,7 +81,7 @@ class _QuizPageState extends State<QuizPage> {
                     ),
                     const VerticalSpace(size: 20),
                     Container(
-                      height: 70,
+                      height: heigth / 9,
                       padding: const EdgeInsets.only(
                         left: 10,
                         right: 10,
@@ -94,9 +95,8 @@ class _QuizPageState extends State<QuizPage> {
                         ),
                       ),
                     ),
-                    const VerticalSpace(size: 5),
                     SizedBox(
-                      height: 500,
+                      height: heigth / 1.64,
                       child: Center(
                         child: ListView.builder(
                             shrinkWrap: true,

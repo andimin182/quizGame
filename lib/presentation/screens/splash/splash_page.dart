@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/core/constants.dart';
 import 'package:quiz/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quiz/presentation/router/router.gr.dart';
 
@@ -11,6 +12,10 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    heigth = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    log('Height: $heigth');
+    log('width: $width');
     return BlocListener<AuthBloc, AuthState>(
       listener: ((context, state) {
         state.map(

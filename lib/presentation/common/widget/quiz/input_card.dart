@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/core/constants.dart' as c;
 
 Widget inputQuestionCard({
   required String answer,
@@ -9,7 +10,7 @@ Widget inputQuestionCard({
   return Container(
     padding: const EdgeInsets.all(15),
     height: height,
-    width: 350,
+    width: c.heigth / 1.17,
     decoration: BoxDecoration(
       color: colorBg,
       borderRadius: BorderRadius.circular(30),

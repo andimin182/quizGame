@@ -68,162 +68,187 @@ class _AuthPageState extends State<AuthPage> {
           body: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _globalKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  '📝',
-                  style: TextStyle(
-                    fontSize: 130,
-                  ),
-                ),
-                const VerticalSpace(size: 15.0),
-                TextFormField(
-                  onChanged: (value) => BlocProvider.of<SignInBloc>(context)
-                      .add(SignInEvent.emailChanged(value)),
-                  validator: (_) => BlocProvider.of<SignInBloc>(context)
-                      .state
-                      .email
-                      .value
-                      .fold(
-                          (f) => f.maybeMap(
-                                invalidEmail: (_) => 'Invalid Email',
-                                orElse: () => null,
-                              ),
-                          (_) => null),
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: Icon(
-                      Icons.email_outlined,
-                      color: mainColor,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.green,
-                        width: 3.0,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                        width: 3.0,
-                      ),
-                    ),
-                    border: OutlineInputBorder(),
-                    hintText: 'Insert your email',
-                    hintStyle: TextStyle(
-                      color: mainColor,
-                    ),
-                  ),
-                  style: const TextStyle(
-                    color: mainColor,
-                  ),
-                ),
-                const VerticalSpace(size: 15),
-                TextFormField(
-                  onChanged: (value) => BlocProvider.of<SignInBloc>(context)
-                      .add(SignInEvent.passwordChanged(value)),
-                  validator: (_) => BlocProvider.of<SignInBloc>(context)
-                      .state
-                      .password
-                      .value
-                      .fold(
-                          (f) => f.maybeMap(
-                                invalidPassword: (_) => 'Invalid Password',
-                                orElse: () => null,
-                              ),
-                          (_) => null),
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: Icon(
-                      Icons.password_sharp,
-                      color: mainColor,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.green,
-                        width: 3.0,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                        width: 3.0,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 3.0,
-                      ),
-                    ),
-                    hintText: 'Insert your password',
-                    hintStyle: TextStyle(
-                      color: mainColor,
-                    ),
-                  ),
-                  style: const TextStyle(
-                    color: mainColor,
-                  ),
-                ),
-                const VerticalSpace(
-                  size: 15,
-                ),
-                Row(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Container(
-                        color: Colors.blue,
-                        child: TextButton(
-                          onPressed: () {
-                            BlocProvider.of<SignInBloc>(context).add(
-                                const SignInEvent
-                                    .signInWithEmailAndPasswordPressed());
-                          },
-                          child: const Text(
-                            'Sign In',
-                            style: TextStyle(
-                              color: Colors.white,
+                    const Text(
+                      '📝',
+                      style: TextStyle(
+                        fontSize: 130,
+                      ),
+                    ),
+                    const VerticalSpace(size: 15.0),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 8.0,
+                      ),
+                      child: TextFormField(
+                        onChanged: (value) =>
+                            BlocProvider.of<SignInBloc>(context)
+                                .add(SignInEvent.emailChanged(value)),
+                        validator: (_) => BlocProvider.of<SignInBloc>(context)
+                            .state
+                            .email
+                            .value
+                            .fold(
+                                (f) => f.maybeMap(
+                                      invalidEmail: (_) => 'Invalid Email',
+                                      orElse: () => null,
+                                    ),
+                                (_) => null),
+                        obscureText: false,
+                        decoration: const InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                            color: mainColor,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.green,
+                              width: 3.0,
                             ),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 3.0,
+                            ),
+                          ),
+                          border: OutlineInputBorder(),
+                          hintText: 'Insert your email',
+                          hintStyle: TextStyle(
+                            color: mainColor,
+                          ),
+                        ),
+                        style: const TextStyle(
+                          color: mainColor,
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.blue,
-                        child: TextButton(
-                          onPressed: () {
-                            BlocProvider.of<SignInBloc>(context).add(
-                                const SignInEvent
-                                    .registerWithEmailAndPasswordPressed());
-                          },
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(
-                              color: Colors.white,
+                    const VerticalSpace(size: 15),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 8.0,
+                      ),
+                      child: TextFormField(
+                        onChanged: (value) =>
+                            BlocProvider.of<SignInBloc>(context)
+                                .add(SignInEvent.passwordChanged(value)),
+                        validator: (_) => BlocProvider.of<SignInBloc>(context)
+                            .state
+                            .password
+                            .value
+                            .fold(
+                                (f) => f.maybeMap(
+                                      invalidPassword: (_) =>
+                                          'Invalid Password',
+                                      orElse: () => null,
+                                    ),
+                                (_) => null),
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(
+                            Icons.lock_outline,
+                            color: mainColor,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.green,
+                              width: 3.0,
                             ),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 3.0,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 3.0,
+                            ),
+                          ),
+                          hintText: 'Insert your password',
+                          hintStyle: TextStyle(
+                            color: mainColor,
+                          ),
                         ),
+                        style: const TextStyle(
+                          color: mainColor,
+                        ),
+                      ),
+                    ),
+                    const VerticalSpace(
+                      size: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 8.0,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              color: Colors.blue,
+                              child: TextButton(
+                                onPressed: () {
+                                  BlocProvider.of<SignInBloc>(context).add(
+                                      const SignInEvent
+                                          .signInWithEmailAndPasswordPressed());
+                                },
+                                child: const Text(
+                                  'Sign In',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Expanded(
+                            child: Container(
+                              color: Colors.blue,
+                              child: TextButton(
+                                onPressed: () {
+                                  BlocProvider.of<SignInBloc>(context).add(
+                                      const SignInEvent
+                                          .registerWithEmailAndPasswordPressed());
+                                },
+                                child: const Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const VerticalSpace(size: 25),
+                    Visibility(
+                      visible: state.isSubmitting,
+                      child: const LinearProgressIndicator(
+                        backgroundColor: Colors.white,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                       ),
                     ),
                   ],
                 ),
-                const VerticalSpace(size: 25),
-                Visibility(
-                  visible: state.isSubmitting,
-                  child: const LinearProgressIndicator(
-                    backgroundColor: Colors.white,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         );
