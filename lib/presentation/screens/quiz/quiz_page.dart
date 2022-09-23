@@ -80,7 +80,7 @@ class _QuizPageState extends State<QuizPage> {
                     ),
                     const VerticalSpace(size: 20),
                     Container(
-                      height: 120,
+                      height: 70,
                       padding: const EdgeInsets.only(
                         left: 10,
                         right: 10,
@@ -94,9 +94,9 @@ class _QuizPageState extends State<QuizPage> {
                         ),
                       ),
                     ),
-                    const VerticalSpace(size: 15),
+                    const VerticalSpace(size: 5),
                     SizedBox(
-                      height: 400,
+                      height: 500,
                       child: Center(
                         child: ListView.builder(
                             shrinkWrap: true,
@@ -122,7 +122,7 @@ class _QuizPageState extends State<QuizPage> {
                             }),
                       ),
                     ),
-                    const VerticalSpace(size: 20),
+                    const VerticalSpace(size: 10),
                     BlocBuilder<QuestionBloc, QuestionState>(
                       builder: (context, state) {
                         if (state.showButtonResults) {

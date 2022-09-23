@@ -76,12 +76,14 @@ class _AnswerCardState extends State<AnswerCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      HtmlCharacterEntities.decode(widget.answer),
-                      style: const TextStyle(
-                        color: mainColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    Expanded(
+                      child: Text(
+                        HtmlCharacterEntities.decode(widget.answer),
+                        style: const TextStyle(
+                          color: mainColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                     Visibility(
